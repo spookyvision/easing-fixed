@@ -129,7 +129,7 @@ easer!(exp_inout, ExpInOut, |x: Fix| {
 
 #[cfg(test)]
 mod test {
-    // acceptable relative error (0.1%)
+    // acceptable relative error (0.015%)
     const ERROR_MARGIN_FAC: f64 = 0.00015;
 
     use std::{fs::File, iter::zip, path::PathBuf};
