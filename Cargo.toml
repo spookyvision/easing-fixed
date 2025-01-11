@@ -1,19 +1,21 @@
 [package]
 name = "easing-fixed"
-version = "0.0.5"
+version = "0.1.0"
 edition = "2021"
 authors = [
     "Jack Ward <joliv@users.noreply.github.com>",
     "Anatol Ulrich <spookyvision@users.noreply.github.com>",
 ]
 license = "MIT"
-description = "Leveraging Rust's powerful iterators for easing."
+description = "easing iterators using fixed-point math"
+homepage = "https://github.com/spookyvision/easing-fixed"
 repository = "https://github.com/spookyvision/easing-fixed"
 readme = "README.md"
+keywords = ["animation", "no_std", "fixed"]
 
 [dependencies]
 fixed = "1.28.0"
-fixed-exp = { git = "https://github.com/spookyvision/fixed-exp" }
+fixed-exp = { git = "https://github.com/spookyvision/fixed-exp", rev = "e291e8d", version = "0.2" }
 fixed_trigonometry = { version = "0.4.4", default-features = false }
 
 [dev-dependencies]
