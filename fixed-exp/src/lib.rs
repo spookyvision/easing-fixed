@@ -161,8 +161,12 @@ where
     T::Bits: PrimInt + std::fmt::Debug,
 {
     assert!(Helper::is_positive(n), "exponent should be positive");
-
-    let powi = powi_positive(x, n.int().to_num());
+    let ni = n.int().to_num();
+    let powi = if ni == 0 {
+        T::from_num(1)
+    } else {
+        powi_positive(x, ni)
+    };
     let frac = n.frac();
 
     if frac.is_zero() {
@@ -212,7 +216,9 @@ macro_rules! impl_fixed_pow {
                 match n.cmp(&zero) {
                     Ordering::Greater => powf_positive(self, n),
                     Ordering::Equal => Self::from_bits(1 << Frac::U32),
-                    Ordering::Less => powf_positive(Self::from_bits(1 << Frac::U32) / self, Helper::neg(n)),
+                    Ordering::Less => {
+                        powf_positive(Self::from_bits(1 << Frac::U32) / self, Helper::neg(n))
+                    },
                 }
             }
         }
