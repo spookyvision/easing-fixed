@@ -72,9 +72,20 @@ pub trait FixedPowF: Fixed {
     fn powf(self, n: Self) -> Self;
 }
 
-fn powi_positive<T: Fixed>(mut x: T, mut n: i32) -> T {
+fn powi_positive<T: Fixed>(x: T, n: i32) -> T {
     assert!(n > 0, "exponent should be positive");
+    let mut res = x;
+    for _ in 1..n {
+        res = res * x;
+    }
+    res
+}
 
+// TODO: this overflows super quick. Might still be useful for special case scenarios,
+// but determining those = effort I don't feel like putting in
+#[allow(unused)]
+fn powi_positive_fast<T: Fixed>(mut x: T, mut n: i32) -> T {
+    assert!(n > 0, "exponent should be positive");
     let mut acc = x;
     n -= 1;
 
