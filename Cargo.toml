@@ -1,5 +1,5 @@
 [package]
-name = "easing"
+name = "easing-fixed"
 version = "0.0.5"
 edition = "2021"
 authors = [
@@ -8,7 +8,7 @@ authors = [
 ]
 license = "MIT"
 description = "Leveraging Rust's powerful iterators for easing."
-repository = "https://github.com/joliv/easing"
+repository = "https://github.com/spookyvision/easing-fixed"
 readme = "README.md"
 
 [dependencies]
@@ -21,3 +21,6 @@ fixed = { version = "1.28.0", features = ["serde"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1" }
 anyhow = "1"
+
+[build-dependencies]
+walkdir = "2.5.0"
