@@ -1,9 +1,13 @@
-#### `easing` easing iterators for rust
+## `easing` easing iterators for rust
+
+This is a fork of https://github.com/joliv/easing which uses [fixed-point](https://crates.io/crates/fixed) math instead. `no_std` compatible.
+
+## (mostly preserved) original README
 
 Rust iterators are fantastic—why not use them for easing? Use like so:
 
 ```rust
-use easing;
+use easing_fixed as easing;
 
 let begin: f64 = 0;
 let end:   f64 = 1000;
@@ -36,7 +40,3 @@ Available iterators are currently:
 | exponential | `exp_in` | `exp_out` | `exp_inout` |
 
 Easing functions taken from [warrenm's AHEasing](https://github.com/warrenm/AHEasing).
-
-Find it on crates.io at [https://crates.io/crates/easing](https://crates.io/crates/easing/).
-
-Licesnsed under the [LGPLv3](http://www.gnu.org/licenses/lgpl-3.0.en.html).
