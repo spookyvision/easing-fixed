@@ -1,9 +1,6 @@
 // clean up test results dir
 // sadly we can't #[cfg(test)] this, so it runs on every build. Oh well.
-use std::{
-    fs::{remove_file, File},
-    path::PathBuf,
-};
+use std::{fs::remove_file, path::PathBuf};
 
 use walkdir::WalkDir;
 pub fn main() {
