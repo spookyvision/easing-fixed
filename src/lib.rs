@@ -3,7 +3,7 @@
 use std::f64::consts::FRAC_PI_2;
 
 use fixed::types::I16F16;
-use fixed_exp::FixedPowF;
+use fixed_exp2::FixedPowF;
 use fixed_trigonometry::sin;
 pub(crate) type Fix = I16F16;
 
