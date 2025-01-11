@@ -14,7 +14,7 @@ keywords = ["animation", "no_std", "fixed"]
 
 [dependencies]
 fixed = "1.28.0"
-fixed-exp = { git = "https://github.com/spookyvision/fixed-exp", rev = "e291e8d", version = "0.2" }
+fixed-exp2 = "0.2"
 fixed_trigonometry = { version = "0.4.4", default-features = false }
 
 [dev-dependencies]
