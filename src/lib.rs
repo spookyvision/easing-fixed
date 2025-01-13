@@ -5,7 +5,7 @@ use std::f64::consts::FRAC_PI_2;
 use fixed::types::I16F16;
 use fixed_exp2::FixedPowF;
 use fixed_trigonometry::sin;
-pub(crate) type Fix = I16F16;
+pub type Fix = I16F16;
 
 macro_rules! easer {
     ($f:ident, $t:ident, $e:expr) => {
@@ -25,6 +25,15 @@ macro_rules! easer {
             }
         }
 
+        impl $t {
+            pub fn at(x: Fix, start: Fix, dist: Fix) -> Fix {
+                Fix::from_num($e(x)).mul_add(dist, start)
+            }
+            pub fn at_normalized(x: Fix) -> Fix {
+                Self::at(x, Fix::from_num(0), Fix::from_num(1))
+            }
+        }
+
         impl Iterator for $t {
             type Item = Fix;
 
@@ -34,7 +43,7 @@ macro_rules! easer {
                     None
                 } else {
                     let x: Fix = Fix::from_num(self.step) / Fix::from_num(self.steps);
-                    Some(Fix::from_num($e(x)).mul_add(self.dist, self.start))
+                    Some(Self::at(x, self.start, self.dist))
                 }
             }
         }
@@ -126,6 +135,15 @@ easer!(exp_inout, ExpInOut, |x: Fix| {
             .mul_add(Fix::from_num(-0.5), Fix::from_num(1))
     }
 });
+easer!(smoothstep, SmoothStep, |x: Fix| {
+    if x == Fix::from_num(1) {
+        Fix::from_num(1)
+    } else if x == 0. {
+        Fix::from_num(0)
+    } else {
+        x * x * (Fix::from_num(3) - Fix::from_num(2) * x)
+    }
+});
 
 #[cfg(test)]
 mod test {
@@ -203,6 +221,18 @@ mod test {
             panic!("{test_name} outside of error {ERROR_MARGIN_FAC} margin: {is_converted:?} <> {ought_data:?}");
         }
         Ok(())
+    }
+
+    #[test]
+    fn at() {
+        let res = ExpInOut::at(Fix::from_num(0.5), Fix::from_num(10.), Fix::from_num(100));
+        assert_eq!(res, Fix::from_num(60.));
+    }
+
+    #[test]
+    fn at_normalized() {
+        let res = ExpInOut::at_normalized(Fix::from_num(0.75));
+        assert_eq!(res, Fix::from_num(0.984375));
     }
 
     #[test]
@@ -360,6 +390,24 @@ mod test {
             19.53125, 78.125, 312.5, 1250., 5000., 8750., 9687.5, 9921.875, 9980.46875, 10000.,
         ];
         let res: Vec<Fix> = exp_inout(Fix::from_num(0), Fix::from_num(10000), 10).collect();
+        must_be_withing_error_margin_else_write(function!(), model, res)
+    }
+
+    #[test]
+    fn smoothstep_test() -> anyhow::Result<()> {
+        let model = vec![
+            280.00000000000006,
+            1040.0000000000002,
+            2160.0,
+            3520.000000000001,
+            5000.0,
+            6480.0,
+            7839.999999999999,
+            8960.000000000002,
+            9720.0,
+            10000.,
+        ];
+        let res: Vec<Fix> = smoothstep(Fix::from_num(0), Fix::from_num(10000), 10).collect();
         must_be_withing_error_margin_else_write(function!(), model, res)
     }
 }
