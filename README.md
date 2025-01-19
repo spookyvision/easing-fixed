@@ -2,6 +2,16 @@
 
 This is a fork of https://github.com/joliv/easing which uses [fixed-point](https://crates.io/crates/fixed) math instead. `no_std` compatible.
 
+## Features added in fork
+- smoothstep
+- `at(t, start, distance)` and `at_normalized(t)` methods if you don't want iterators:
+
+```rust
+use easing_fixed::{Fix, ExpInOut};
+
+let res = ExpInOut::at(Fix::from_num(0.5), Fix::from_num(10.), Fix::from_num(100)); // range is 10..=110, result is 60
+let res = ExpInOut::at_normalized(Fix::from_num(0.75)); // range is 0..1, result is 0.984375
+```
 ## Development
 
 The test cases define an acceptable error margin (`ERROR_MARGIN_FAC`) and every test case stepping outside of that threshold gets its "is" and "ought" data written to `jupyter-tests/<name of test>-{is,ought}.json`. In there, you can use the supplied `tests.ipynb` notebook for a visualized representation of the failure:
