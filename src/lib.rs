@@ -1,7 +1,5 @@
 // Copyright 2016 John Ward under MIT
-
-use std::f64::consts::FRAC_PI_2;
-
+#![no_std]
 use fixed::types::I16F16;
 use fixed_exp2::FixedPowF;
 use fixed_trigonometry::sin;
@@ -89,11 +87,11 @@ easer!(quartic_inout, QuarticInOut, |x: Fix| {
     }
 });
 easer!(sin_in, SinIn, |x: Fix| {
-    let y = (x - Fix::from_num(1)) * Fix::from_num(FRAC_PI_2);
+    let y = (x - Fix::from_num(1)) * Fix::FRAC_PI_2;
     sin(y) + Fix::from_num(1)
 });
 easer!(sin_out, SinOut, |x: Fix| {
-    sin(x * Fix::from_num(FRAC_PI_2))
+    sin(x * Fix::FRAC_PI_2)
 });
 easer!(sin_inout, SinInOut, |x: Fix| {
     if x < Fix::from_num(0.5) {
@@ -149,8 +147,9 @@ easer!(smoothstep, SmoothStep, |x: Fix| {
 mod test {
     // acceptable relative error (0.015%)
     const ERROR_MARGIN_FAC: f64 = 0.00015;
+    extern crate std;
 
-    use std::{fs::File, iter::zip, path::PathBuf};
+    use std::{fs::File, iter::zip, path::PathBuf, vec, vec::Vec, eprintln, format};
 
     use anyhow::anyhow;
 
