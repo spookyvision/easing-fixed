@@ -37,7 +37,7 @@ name = "easing_fixed"
 path = "src/lib.rs"
 
 [dependencies.fixed]
-version = "1.28.0"
+version = "1.29.0"
 
 [dependencies.fixed-exp2]
 version = "0.2"
